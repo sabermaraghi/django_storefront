@@ -1,0 +1,44 @@
+pwd: /home/saber/Desktop/storefront
+python manage.py startapp playground
+settings.py: 
+            INSTALLED_APPS=... 'playgroung'
+            
+           
+_________________________________________________________
+writing views
+#views.py:
+
+from django.shortcuts import render 
+from django.http import HttpResponse
+
+def say_hello(request):
+# Pull data from db
+# Transform
+# Send Email
+    return HttpResponse('Hello World!...')
+    
+_________________________________________________________
+vim /home/saber/Desktop/storefront/playgrounf/urls.py:
+___________________________
+from django.urls import path
+from . import views
+
+
+# URLConf
+urlpatterns = [
+  path('hello', views.say_hello)
+]
+___________________________
+vim /home/saber/Desktop/storefront/storefront/urls.py:
+___________________________
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path('playground/', include('playground.urls'))
+
+]
+___________________________
+python manage.py runserver 9000
+http://127.0.0.1:9000/playground/hello
