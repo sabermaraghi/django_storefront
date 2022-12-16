@@ -42,3 +42,55 @@ urlpatterns = [
 ___________________________
 python manage.py runserver 9000
 http://127.0.0.1:9000/playground/hello
+
+___________________________
+pipenv shell
+mkdir playground/templates
+vim playground/templates/hello.html
+{% if name %}
+<h1>Hello {{ name }}</h1>
+{% else %}
+<h1>Hello World</h1>
+{% endif %}
+________
+vim playground/views.py
+def say_hello(request):
+    return render(request, 'hello.html')
+________
+vim playground/views.py
+def say_hello(request):
+    return render(request, 'hello.html', {'name': 'Saber'})
+___________________________
+
+python -m pip install django-debug-toolbar
+pipenv install django-debug-toolbar
+
+vim storefront/settings.py
+      INSTALLED_APPS: 'debug_toolbar'
+      
+      
+      urlpatterns = [
+          ---
+          path('__debug__/', include(debug_toolbar.urls)),
+      ]
+      
+      
+      MIDDLEWARE = [
+          ...
+          'debug_toolbar.middleware.DebugToolbarMiddleware', 
+
+      
+      INTERNAL_IPS = [
+          # ...
+          '127.0.0.1',
+          # ...
+      ]
+
+
+
+
+
+
+
+
+
