@@ -12,6 +12,7 @@ sudo apt install code
 cd Desktop/
 mkdir storefront
 cd $_
+pipenv shell
 pipenv install django
 ls   #=====>>>> contains:Pipfile  Pipfile.lock
 code .
