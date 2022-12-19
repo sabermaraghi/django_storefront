@@ -1,0 +1,4 @@
+python manage.py makemigrations
+
+vim store/migrations/0001_initial.py
+
