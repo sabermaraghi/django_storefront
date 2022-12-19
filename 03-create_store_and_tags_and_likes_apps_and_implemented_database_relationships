@@ -127,4 +127,4 @@ class LikedItem(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
-
+python manage.py runserver 9000
