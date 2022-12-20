@@ -130,8 +130,23 @@ vim playground/views.py
     
     return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
 ############################################################################
+# 05-django-ORM - 10
+vim playground/views.py
+    # 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+    #query_set = Product.objects.all()[:10]
+    #query_set = Product.objects.all()[10:20]
+#####################################################
+# 05-django-ORM -11
+vim playground/views.py
+    #query_set = Product.objects.values('id', 'title')
+    #query_set = Product.objects.values('id', 'title', 'collection__title')
+    #query_set = Product.objects.values_list('id', 'title', 'collection__title')
+    #############
+    #select products that have been ordered and sort them by title
+    #query_set = OrderItem.objects.values('product__id').distinct()
+    query_set = Product.objects.filter(id__in=OrderItem.objects.values('product_id').distinct()).order_by('title')
 
-
+    return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
 
 
 
