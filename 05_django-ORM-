@@ -148,13 +148,29 @@ vim playground/views.py
 
     return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
 
+#####################################################
+# 05-django-ORM -12
 
+vim playground/templates/hello.html
+<html>
+  <body>
+    ...
+      <li>{{ product }} ${{ product.unit_price }}</li>
+      <li>{{ product }} ${{ product.description }}</li>
+   ...
+  </body>
+</html>
 
+vim playground/views.py
 
-
-
-
-
+def say_hello(request):
+    ...
+    #query_set = Product.objects.only('id', 'title')  # terrible Idea 
+    query_set = Product.objects.defer('description')
+    return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
+    
+#####################################################
+# 05-django-ORM -13
 
 
 
