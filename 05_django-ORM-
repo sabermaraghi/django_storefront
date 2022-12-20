@@ -167,15 +167,50 @@ def say_hello(request):
     ...
     #query_set = Product.objects.only('id', 'title')  # terrible Idea 
     query_set = Product.objects.defer('description')
+    
     return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
     
 #####################################################
 # 05-django-ORM -13
+vim playground/templates/hello.html
+<html>
+  <body>
+      ...
+      <li>{{ product }} ${{ product.description }}</li>                                 # 1
+      <li>{{ product.title }} - {{ product.collection.title }}</li>                     # 2
+      <li>{{ product.title }} - {{ product.collection.title }}</li>                     # 3
+      <li>{{ product.title }}</li>                                                      # 4
+      <li>{{ product.title }} - {{ product.collection.title }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
 
-
-
-
-
+vim playground/views.py
+    ...
+    #query_set = Product.objects.select_related('collection').all()                    # 1
+    #query_set = Product.objects.select_related('collection__someOtherField').all()    # 2
+    # select_related (1)
+    # prefetch_related (n)
+    #query_set = Product.objects.prefetch_related('promotions').all() # remove product.collections.title from hello.html    # 3
+    query_set = Product.objects.select_related('collection').all()                     # 4
+    query_set = Product.objects.prefetch_related('promotions').select_related('collection').all()
+###########************
+    #write a query to get the last five orders with their customer and items, including the product reference in each order item.
+    query_set = Order.objects.select_related('customer').order_by('-placed_at')[:5]
+    return render(request, 'hello.html', {'name': 'Mosh', 'orders': list(query_set)})
+vim playground/templates/hello.html
+        ...
+      {% for order in orders %}
+      <li>{{ order.id }} - {{ order.customer.first_name }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
+###########************
+    
+    
+    #return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
 
 
 
