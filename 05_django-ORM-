@@ -54,7 +54,7 @@ def say_hello(request):
     return render(request, 'hello.html', {'name': 'Mosh'})
 ############################################################################
 # 05-django-ORM - 6- Filtering Objects
-
+vim playground/views.py
 from django.http import HttpResponse
 from store.models import Product
 from django.core.exceptions import ObjectDoesNotExist
@@ -103,3 +103,56 @@ from django.db.models import Q
     return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
 ############################################################################
 # 05-django-ORM - 8- Referencing Fields using F Objects
+
+vim playground/views.py
+from django.db.models import Q, F
+
+    # Products: inventory = price
+    query_set = Product.objects.filter(inventory=F('unit_price'))
+    query_set = Product.objects.filter(inventory=F('collection__id'))
+############################################################################
+# 05-django-ORM - 9- Sorting
+
+vim playground/views.py
+...
+    query_set = Product.objects.order_by('title')
+    #query_set = Product.objects.order_by('title')  # Asc
+    #query_set = Product.objects.order_by('-title') # Desc
+    #query_set = Product.objects.order_by('unit_price', '-title') # Desc
+    #query_set = Product.objects.order_by('unit_price', '-title').reverse()
+    #query_set = Product.objects.order_by('unit_price', '-title') # Desc
+    #query_set = Product.objects.filter(collection_id=1).order_by('unit_price')
+#############    
+    #product = Product.objects.order_by('unit_price')[0]
+    #product = Product.objects.earliest('unit_price')
+    #product = Product.objects.latest('unit_price')
+    #return render(request, 'hello.html', {'name': 'Mosh', 'product': product})
+    
+    return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
+############################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
