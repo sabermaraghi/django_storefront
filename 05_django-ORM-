@@ -87,5 +87,7 @@ vim playground/templates/hello.html
   </body>
 </html>
 ############################################################################
+# 05-django-ORM - 7- Complex Lookups Using Q Objects
+
 
 
