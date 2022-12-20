@@ -1,0 +1,30 @@
+sudo snap install datagrip --classic
+
+sudo su -
+mysql
+create user 'saber'@'localhost' identified by 'MyPassword';
+grant usage on *.* to 'saber'@'localhost';
+grant all privileges on *.* to 'saber'@'localhost';
+FLUSH PRIVILEGES;
+create database storefront;
+
+edit settings.py   
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'storefront',
+        'HOST': 'localhost',
+        'USER': 'saber',
+        'PASSWORD': 'MyPassword',
+        'PORT': '3306',
+    }
+}
+
+run datagrip application and restore seed.sql to storefront database
+
+python manage.py migrate
+
+check data recieved in datagrip application
+python manage.py runserver
+check it in browser
+
