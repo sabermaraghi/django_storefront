@@ -89,5 +89,17 @@ vim playground/templates/hello.html
 ############################################################################
 # 05-django-ORM - 7- Complex Lookups Using Q Objects
 
+vim playground/views.py
 
+from django.db.models import Q
+    ...
+    Products: inventory < 10 AND price < 20
+    query_set = Product.objects.filter(inventory__lt=10, unit_price__lt=20)
+    query_set = Product.objects.filter(inventory__lt=10).filter(unit_price__lt=20)
+    Products: inventory < 10 OR price < 20
+    query_set = Product.objects.filter(Q(inventory__lt=10) | Q(unit_price__lt=20))
+    query_set = Product.objects.filter(Q(inventory__lt=10) & ~Q(unit_price__lt=20))
 
+    return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
+############################################################################
+# 05-django-ORM - 8- Referencing Fields using F Objects
