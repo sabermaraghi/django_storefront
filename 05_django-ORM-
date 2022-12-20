@@ -27,21 +27,29 @@ python manage.py migrate
 check data recieved in datagrip application
 python manage.py runserver
 check it in browser
-###############################################
+############################################################################
+
 vim playground/views.py
 
 from django.shortcuts import render
 from django.http import HttpResponse
 from store.models import Product
+from django.core.exceptions import ObjectDoesNotExist
 
 def say_hello(request):
-    query_set = Product.objects.all()
-
-    for product in query_set:
-        print(product)
+#    query_set = Product.objects.all()
+#    try:
+#        query_set = Product.objects.get(pk=0)
+#    except ObjectDoesNotExist:
+#        pass
+    product = Product.objects.filter(pk=0).first() #return None not exception
+# or
+    product = Product.objects.filter(pk=0).exists()
+    #for product in query_set:
+    #    print(product)
 #    list(query_set)
 #    query_set[0:5]
 #    query_set.filter().filter().order_by()
 
     return render(request, 'hello.html', {'name': 'Mosh'})
-
+############################################################################
