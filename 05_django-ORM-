@@ -276,7 +276,21 @@ from django.db.models import Value, F, Func, Count, ExpressionWrapper
     queryset = Customer.objects.annotate(discounted_price=discounted_price)
     return render(request, 'hello.html', {'name': 'Saber', 'result': list(queryset)})
 ####################################################
-# 05-django-ORM -
+# 05-django-ORM -19- Querying Generic Relationships
+
+from django.contrib.contenttypes.models import ContentType
+from store.models import Product
+from tags.models import TaggedItem
+    content_type = ContentType.objects.get_for_model(Product)
+    queryset = TaggedItem.objects \
+        .select_related('tag') \
+        .filter(
+            content_type=content_type,
+            object_id=1
+        )
+    return render(request, 'hello.html', {'name': 'Saber', 'tags': list(queryset)})
+####################################################
+# 05-django-ORM -    
 
 
 
