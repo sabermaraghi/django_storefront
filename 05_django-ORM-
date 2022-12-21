@@ -262,6 +262,22 @@ from django.db.models.functions import Concat
         full_name=Concat('first_name', Value(' '), 'last_name'))
     return render(request, 'hello.html', {'name': 'Saber', 'result': list(queryset)})
 ####################################################
-# 05-django-ORM -
+# 05-django-ORM -17- Grouping Data
+
+from django.db.models import Value, F, Func, Count
+    queryset = Customer.objects.annotate(orders_count=Count('order'))
+    return render(request, 'hello.html', {'name': 'Saber', 'result': list(queryset)})
+
+
+
+
+
+
+
+
+
+
+
+
 
 
