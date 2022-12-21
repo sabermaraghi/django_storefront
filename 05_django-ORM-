@@ -290,11 +290,25 @@ from tags.models import TaggedItem
         )
     return render(request, 'hello.html', {'name': 'Saber', 'tags': list(queryset)})
 ####################################################
-# 05-django-ORM -    
+# 05-django-ORM -20- Custom Managers
 
 
 
 
+vim tags/models.py
+class TaggedItemManager(models.Manager):
+    def get_tags_for(self, obj_type, obj_id):
+        content_type = ContentType.objects.get_for_model(obj_type)
+
+        queryset = TaggedItem.objects \
+                .select_related('tag') \
+                .filter(
+                    content_type=content_type,
+                    object_id=obj_id
+        )
+class TaggedItem(models.Model):
+    objects = TaggedItemManager()
+    ...
 
 
 
