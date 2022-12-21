@@ -234,13 +234,34 @@ vim playground/templates/hello.html
   </body>
 </html>
 ####################################################
-# 05-django-ORM -1
-    
+# 05-django-ORM -15- Annotating Objects
+vim playground/views.py
+from django.db.models import Value, F
+    queryset = Customer.objects.annotate(is_new=Value(True))
+    queryset = Customer.objects.annotate(new_id=F('id'))
+    return render(request, 'hello.html', {'name': 'Saber', 'result': list(queryset)})
+ 
+vim playground/templates/hello.html
+<html>
+  <body>
+    ...
+     {{ queryset }}
+####################################################
+# 05-django-ORM -16- Calling Database Functions
 
+vim playground/views.py
+from django.db.models import Value, F, Func
+from django.db.models.functions import Concat
+    queryset = Customer.objects.annotate(
+        # CONCAT
+        full_name=Func(F('first_name'), Value(' '),
+                       F('last_name'), function='CONCAT'))
 
-
-
-
-
+    queryset = Customer.objects.annotate(
+        # CONCAT
+        full_name=Concat('first_name', Value(' '), 'last_name'))
+    return render(request, 'hello.html', {'name': 'Saber', 'result': list(queryset)})
+####################################################
+# 05-django-ORM -
 
 
