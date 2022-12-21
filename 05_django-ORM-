@@ -310,7 +310,13 @@ class TaggedItem(models.Model):
     objects = TaggedItemManager()
     ...
 
+vim playground/views.py
+    queryset = TaggedItem.objects.get_tags_for(Product, 1)
 
+    return render(request, 'hello.html', {'name': 'Saber', 'tags': list(queryset)})
+
+####################################################
+# 05-django-ORM -21- Understanding QuerySet Cache
 
 
 
