@@ -212,8 +212,30 @@ vim playground/templates/hello.html
     
     #return render(request, 'hello.html', {'name': 'Mosh', 'products': list(query_set)})
 
+#####################################################
+# 05-django-ORM -14- Aggregating Objects
 
+from django.db.models.aggregates import Count, Max, Min, Avg, Sum
+vim playground/views.py
+    #14 aggregations
+    #result = Product.objects.aggregate(count=Count('id'), min_price=Min('unit_price'))
+    result = Product.objects.filter(collection__id=1).aggregate(count=Count('id'), min_price=Min('unit_price'))
+    return render(request, 'hello.html', {'name': 'Saber', 'result': result})
+    
+vim playground/templates/hello.html
 
+<html>
+  <body>
+    {% if name %}
+    <h1>Hello {{ name }}</h1>
+    {% else %}
+    <h1>Hello World</h1>
+    {% endif %} {{ result }}
+  </body>
+</html>
+####################################################
+# 05-django-ORM -1
+    
 
 
 
